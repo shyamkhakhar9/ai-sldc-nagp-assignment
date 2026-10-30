@@ -13,17 +13,17 @@ The Mermaid MCP named in the brief was not available in this workspace. The diag
 ```mermaid
 flowchart LR
     subgraph clients["HTTP client"]
-        C["Any HTTP caller\n(no UI project in repo)"]
+        C["Any HTTP caller<br/>(no UI project in repo)"]
     end
 
     subgraph process["InvoiceApproval.Api process"]
-        EP["InvoiceEndpoints\nEndpoints/InvoiceEndpoints.cs"]
-        SVC["InvoiceService\nServices/InvoiceService.cs"]
-        STORE["InMemoryInvoiceStore\nPersistence/InMemoryInvoiceStore.cs"]
-        MEM["ConcurrentDictionary of Invoice\nInMemoryInvoiceStore._invoices"]
+        EP["InvoiceEndpoints<br/>Endpoints/InvoiceEndpoints.cs"]
+        SVC["InvoiceService<br/>Services/InvoiceService.cs"]
+        STORE["InMemoryInvoiceStore<br/>Persistence/InMemoryInvoiceStore.cs"]
+        MEM["ConcurrentDictionary of Invoice<br/>InMemoryInvoiceStore._invoices"]
     end
 
-    C -->|POST /api/invoices/{id}/approve\nInvoiceEndpoints.ApproveAsync| EP
+    C -->|"POST /api/invoices/:id/approve<br/>InvoiceEndpoints.ApproveAsync"| EP
     EP -->|IInvoiceService.ApproveAsync| SVC
     SVC -->|IInvoiceStore.GetAsync / TryUpdateAsync| STORE
     STORE --> MEM
@@ -38,7 +38,7 @@ sequenceDiagram
     participant SVC as InvoiceService.DecideAsync
     participant STORE as InMemoryInvoiceStore
 
-    Caller->>EP: POST /api/invoices/{id}/approve { actor }
+    Caller->>EP: POST /api/invoices/:id/approve with actor
     EP->>SVC: ApproveAsync(id, actor)
     SVC->>STORE: GetAsync(id)
     STORE-->>SVC: Invoice or null
@@ -105,27 +105,27 @@ flowchart LR
         C["Any HTTP caller"]
     end
 
-    subgraph appservice["Azure App Service <<planned>>"]
-        EP["InvoiceEndpoints\nEndpoints/InvoiceEndpoints.cs"]
-        SVC["InvoiceService\nServices/InvoiceService.cs"]
-        OUTBOX["Outbox writer <<planned>>\nnot in repo"]
+    subgraph appservice["Azure App Service planned"]
+        EP["InvoiceEndpoints<br/>Endpoints/InvoiceEndpoints.cs"]
+        SVC["InvoiceService<br/>Services/InvoiceService.cs"]
+        OUTBOX["Outbox writer planned<br/>not in repo"]
     end
 
-    SQL["Azure SQL <<planned>>\ninvoices + outbox + audit"]
-    SB["Azure Service Bus\nprovisioned, unused by code"]
-    WORKER["Outbox worker <<planned>>\nnot in repo"]
-    PAYEX["PayEx <<planned>>\nno client type in assembly"]
+    SQL["Azure SQL planned<br/>invoices + outbox + audit"]
+    SB["Azure Service Bus<br/>provisioned, unused by code"]
+    WORKER["Outbox worker planned<br/>not in repo"]
+    PAYEX["PayEx planned<br/>no client type in assembly"]
 
     C -->|approve request, 2s SLO| EP
     EP --> SVC
-    SVC -->|"same transaction <<planned>>"| SQL
+    SVC -->|"same transaction - planned"| SQL
     SVC --> OUTBOX
-    OUTBOX -->|"row in same transaction <<planned>>"| SQL
-    WORKER -->|"poll / receive <<planned>>"| SQL
-    WORKER -->|"publish <<planned>>"| SB
-    WORKER -->|"submit + idempotency key <<planned>>"| PAYEX
+    OUTBOX -->|"row in same transaction - planned"| SQL
+    WORKER -->|"poll or receive - planned"| SQL
+    WORKER -->|"publish - planned"| SB
+    WORKER -->|"submit with idempotency key - planned"| PAYEX
     PAYEX -->|"reference or 30s timeout"| WORKER
-    WORKER -->|"store reference on outbox row <<planned>>"| SQL
+    WORKER -->|"store reference on outbox row - planned"| SQL
 ```
 
 What does not exist yet: Azure SQL schema, outbox writer, outbox worker, PayEx client, seven-year audit table, authentication on the mutating routes. What exists and is unused: the Service Bus namespace (`ops/evidence/platform.md`).

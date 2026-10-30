@@ -8,7 +8,7 @@ sequenceDiagram
     participant SVC as InvoiceService.DecideAsync
     participant STORE as InMemoryInvoiceStore
 
-    Caller->>EP: POST /api/invoices/{id}/approve { actor }
+    Caller->>EP: POST /api/invoices/:id/approve with actor
     EP->>SVC: ApproveAsync(id, actor)
     SVC->>STORE: GetAsync(id)
     STORE-->>SVC: Invoice or null
