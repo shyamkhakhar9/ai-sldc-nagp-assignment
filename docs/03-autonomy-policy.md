@@ -26,7 +26,7 @@ Levels used here, and only these:
 
 ## Controls that make the level safe
 
-- The triage session **cannot** have Slack, browser MCP, and Azure SQL in the same chat. Day-one L1 uses a redacted log export (no request bodies, no IBANs) pasted by the human. That is the redesigned agent setup in `docs/05-risk-audit-and-measurement.md`.
+- The triage session **cannot** have Slack, a browser tool, and Azure SQL in the same chat. Day-one L1 uses a redacted log export (no request bodies, no IBANs) pasted by the human. That is the redesigned assistant setup in `docs/05-risk-audit-and-measurement.md`.
 - The draft is a file or a sidebar, not a webhook. L2 send is a human click on a rendered summary that has already stripped account numbers.
 - Replay is a checked-in command: `dotnet run -- replay --invoice <id>` uses the key in the outbox row. There is no "retry PayEx" prompt.
 - Every L2 action records actor, time (UTC), and the draft the agent produced. That is the seven-year trail applied to operations, not only to approvals.

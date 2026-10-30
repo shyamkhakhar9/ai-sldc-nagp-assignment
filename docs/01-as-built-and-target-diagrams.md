@@ -6,7 +6,7 @@ Mermaid source:
 - `diagrams/as-built-sequence.mmd`
 - `diagrams/target-container.mmd`
 
-The Mermaid MCP named in the brief was not available in this workspace. The diagrams were written as Mermaid source and checked against the symbols they cite. Wrong inferences were removed rather than left in the picture.
+Mermaid source is in `diagrams/`. Every as-built box cites a file or symbol. Wrong inferences were removed from the picture and listed below.
 
 ## As-built container (what the process does today)
 

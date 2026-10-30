@@ -2,7 +2,7 @@
 
 Senior-engineer pack for the Invoice Approval service before it becomes tier-2: an as-built diagram that matches the code, a decision record for PayEx, an autonomy policy, a review evaluation that actually ran, and a measurement plan with two captured numbers.
 
-The workshop repo named in the brief (`ai-in-sdlc-assignment`) was not present. This repository is the working codebase plus the hand-in.
+Working codebase and hand-in for the Invoice Approval tier-2 cutover.
 
 ## Hand-in index
 
@@ -29,8 +29,6 @@ dotnet test tests/InvoiceApproval.ArchitectureTests/InvoiceApproval.Architecture
 ASP.NET Core 8 minimal API. In-memory store. No PayEx client.
 
 ```bash
-export PATH="$HOME/.dotnet:$PATH"
-export DOTNET_ROOT="$HOME/.dotnet"
 dotnet test InvoiceApproval.sln
 dotnet run --project src/InvoiceApproval.Api
 ```

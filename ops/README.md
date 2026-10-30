@@ -43,14 +43,14 @@ Ten fixed cases live in `evals/cases/01` through `evals/cases/10`. Labels are in
 
 This is the setup the risk audit in `docs/05-risk-audit-and-measurement.md` is scored against.
 
-The on-call channel has been piloting a repo-scoped coding agent (Cursor / Copilot-style) with the following tools enabled in one session:
+The on-call channel has been piloting a repo-scoped coding assistant with the following tools enabled in one session:
 
 1. **Repository read/write** on `ai-sldc-nagp-assignment`, including this `ops/` tree and `.env` samples.
 2. **Azure SQL read** through a stored connection string, so the agent can `SELECT` invoices, approval decisions, and vendor bank details while triaging month-end failures.
 3. **Log Analytics / Application Insights** for the last six hours of request logs. Those logs include raw request bodies from `/api/invoices` (vendor-supplied memo text and, in some environments, uploaded attachment metadata).
 4. **Blob read** on the invoice-attachment container. Vendors upload PDFs. The agent is asked to "open the attachment if the log line is unclear."
 5. **Slack incoming webhook** to `#invoice-oncall`. The first-response runbook says: dump a summary, include invoice ids, amounts, and a link to the PayEx dashboard.
-6. **Browser MCP** allowed to open vendor portals and `https://payex.example` status pages, including pages the model is told to "fetch and summarise."
+6. **Browser tool** allowed to open vendor portals and `https://payex.example` status pages, including pages the model is told to "fetch and summarise."
 7. **GitHub write**: open issues, comment on issues (public and private), and open pull requests.
 
 The month-end log-triage workflow pastes the last six hours of logs into the agent and says "group the failures and post the summary to Slack." That prompt is the one the risk audit treats as the default agent session.
