@@ -1,0 +1,112 @@
+{
+  "run_id": "r1-fixed10",
+  "prompt": "v1",
+  "set": "fixed",
+  "reviewed_at": "2026-10-30T06:22:44.792123+00:00",
+  "reviewer": "checklist-encoded-from-ops/evals/review-prompt.md",
+  "summary": {
+    "n": 10,
+    "defects": 7,
+    "clean": 3,
+    "caught": 6,
+    "missed": 1,
+    "false_alarms": 0,
+    "catch_rate": 0.857,
+    "miss_rate": 0.143,
+    "false_alarm_rate": 0.0,
+    "caught_ids": [
+      "01",
+      "04",
+      "05",
+      "07",
+      "08",
+      "10"
+    ],
+    "missed_ids": [
+      "02"
+    ],
+    "false_alarm_ids": []
+  },
+  "findings": [
+    {
+      "id": "01",
+      "file": "cases/01-approve-missing-auth.cs",
+      "verdict": "defect",
+      "reason": "A mutating approval endpoint has no authentication or actor.",
+      "expected": "defect",
+      "outcome": "true_positive"
+    },
+    {
+      "id": "02",
+      "file": "cases/02-timeout-treated-as-failure.cs",
+      "verdict": "clean",
+      "reason": "No checklist defect in the snippet.",
+      "expected": "defect",
+      "outcome": "miss"
+    },
+    {
+      "id": "03",
+      "file": "cases/03-clean-amount-validation.cs",
+      "verdict": "clean",
+      "reason": "No checklist defect in the snippet.",
+      "expected": "clean",
+      "outcome": "true_negative"
+    },
+    {
+      "id": "04",
+      "file": "cases/04-log-bank-details.cs",
+      "verdict": "defect",
+      "reason": "A payment instrument is written to application logs.",
+      "expected": "defect",
+      "outcome": "true_positive"
+    },
+    {
+      "id": "05",
+      "file": "cases/05-toctou-approve.cs",
+      "verdict": "defect",
+      "reason": "Status is checked then written with no concurrency token.",
+      "expected": "defect",
+      "outcome": "true_positive"
+    },
+    {
+      "id": "06",
+      "file": "cases/06-clean-audit-event.cs",
+      "verdict": "clean",
+      "reason": "No checklist defect in the snippet.",
+      "expected": "clean",
+      "outcome": "true_negative"
+    },
+    {
+      "id": "07",
+      "file": "cases/07-sql-concat.cs",
+      "verdict": "defect",
+      "reason": "Request data is concatenated into SQL.",
+      "expected": "defect",
+      "outcome": "true_positive"
+    },
+    {
+      "id": "08",
+      "file": "cases/08-swallow-exception.cs",
+      "verdict": "defect",
+      "reason": "The error path reports success after the decision failed.",
+      "expected": "defect",
+      "outcome": "true_positive"
+    },
+    {
+      "id": "09",
+      "file": "cases/09-clean-get-by-id.cs",
+      "verdict": "clean",
+      "reason": "No checklist defect in the snippet.",
+      "expected": "clean",
+      "outcome": "true_negative"
+    },
+    {
+      "id": "10",
+      "file": "cases/10-hardcoded-api-key.cs",
+      "verdict": "defect",
+      "reason": "A credential is committed in source.",
+      "expected": "defect",
+      "outcome": "true_positive"
+    }
+  ]
+}

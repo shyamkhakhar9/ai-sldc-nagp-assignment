@@ -1,0 +1,30 @@
+%% target container view after persistence and PayEx
+%% Boxes with stereotype <<planned>> do not exist in the repository today.
+%% Service Bus exists in the subscription and is unused; the worker does not exist.
+
+flowchart LR
+    subgraph clients["HTTP client"]
+        C["Any HTTP caller"]
+    end
+
+    subgraph appservice["Azure App Service <<planned>>"]
+        EP["InvoiceEndpoints\nEndpoints/InvoiceEndpoints.cs"]
+        SVC["InvoiceService\nServices/InvoiceService.cs"]
+        OUTBOX["Outbox writer <<planned>>\nnot in repo"]
+    end
+
+    SQL["Azure SQL <<planned>>\ninvoices + outbox + audit"]
+    SB["Azure Service Bus\nprovisioned, unused by code"]
+    WORKER["Outbox worker <<planned>>\nnot in repo"]
+    PAYEX["PayEx <<planned>>\nno client type in assembly"]
+
+    C -->|approve request, 2s SLO| EP
+    EP --> SVC
+    SVC -->|"same transaction <<planned>>"| SQL
+    SVC --> OUTBOX
+    OUTBOX -->|"row in same transaction <<planned>>"| SQL
+    WORKER -->|"poll / receive <<planned>>"| SQL
+    WORKER -->|"publish <<planned>>"| SB
+    WORKER -->|"submit + idempotency key <<planned>>"| PAYEX
+    PAYEX -->|"reference or 30s timeout"| WORKER
+    WORKER -->|"store reference on outbox row <<planned>>"| SQL

@@ -1,0 +1,3 @@
+# Review eval (ops/evals/run_eval.py) uses the Python standard library only.
+# This file exists so you can create a venv and pip-install from a lock step.
+# Add packages here if you later load a .env (python-dotenv) or call an LLM.

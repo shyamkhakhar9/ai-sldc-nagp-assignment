@@ -1,0 +1,88 @@
+{
+  "cases": [
+    {
+      "id": "01",
+      "file": "cases/01-approve-missing-auth.cs",
+      "label": "defect",
+      "set": "fixed",
+      "defect": "Mutating approval endpoint has no authentication or actor identity."
+    },
+    {
+      "id": "02",
+      "file": "cases/02-timeout-treated-as-failure.cs",
+      "label": "defect",
+      "set": "fixed",
+      "defect": "PayEx timeout is treated as failure and retried with no idempotency key."
+    },
+    {
+      "id": "03",
+      "file": "cases/03-clean-amount-validation.cs",
+      "label": "clean",
+      "set": "fixed",
+      "defect": null
+    },
+    {
+      "id": "04",
+      "file": "cases/04-log-bank-details.cs",
+      "label": "defect",
+      "set": "fixed",
+      "defect": "IBAN / bank account written to application logs."
+    },
+    {
+      "id": "05",
+      "file": "cases/05-toctou-approve.cs",
+      "label": "defect",
+      "set": "fixed",
+      "defect": "Read-check-write approval without a concurrency token; two approvers can both succeed."
+    },
+    {
+      "id": "06",
+      "file": "cases/06-clean-audit-event.cs",
+      "label": "clean",
+      "set": "fixed",
+      "defect": null
+    },
+    {
+      "id": "07",
+      "file": "cases/07-sql-concat.cs",
+      "label": "defect",
+      "set": "fixed",
+      "defect": "SQL string concatenation / injection on vendor name."
+    },
+    {
+      "id": "08",
+      "file": "cases/08-swallow-exception.cs",
+      "label": "defect",
+      "set": "fixed",
+      "defect": "Approval failure is swallowed and reported as HTTP 200 Approved."
+    },
+    {
+      "id": "09",
+      "file": "cases/09-clean-get-by-id.cs",
+      "label": "clean",
+      "set": "fixed",
+      "defect": null
+    },
+    {
+      "id": "10",
+      "file": "cases/10-hardcoded-api-key.cs",
+      "label": "defect",
+      "set": "fixed",
+      "defect": "Live PayEx API key hardcoded in source."
+    },
+    {
+      "id": "11",
+      "file": "cases/11-local-datetime-audit.cs",
+      "label": "defect",
+      "set": "added",
+      "defect": "Audit timestamp uses DateTime.Now (local) and a local day bucket."
+    },
+    {
+      "id": "12",
+      "file": "cases/12-clean-cancellation-token.cs",
+      "label": "clean",
+      "set": "added",
+      "defect": null
+    }
+  ]
+}

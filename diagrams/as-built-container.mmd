@@ -1,0 +1,20 @@
+%% as-built container view
+%% Every box cites a file or symbol. Inferred items are NOT in this diagram;
+%% they are listed in docs/01-as-built-and-target-diagrams.md.
+
+flowchart LR
+    subgraph clients["HTTP client"]
+        C["Any HTTP caller\n(no UI project in repo)"]
+    end
+
+    subgraph process["InvoiceApproval.Api process"]
+        EP["InvoiceEndpoints\nEndpoints/InvoiceEndpoints.cs"]
+        SVC["InvoiceService\nServices/InvoiceService.cs"]
+        STORE["InMemoryInvoiceStore\nPersistence/InMemoryInvoiceStore.cs"]
+        MEM["ConcurrentDictionary of Invoice\nInMemoryInvoiceStore._invoices"]
+    end
+
+    C -->|POST /api/invoices/{id}/approve\nInvoiceEndpoints.ApproveAsync| EP
+    EP -->|IInvoiceService.ApproveAsync| SVC
+    SVC -->|IInvoiceStore.GetAsync / TryUpdateAsync| STORE
+    STORE --> MEM

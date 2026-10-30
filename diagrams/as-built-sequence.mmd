@@ -1,0 +1,33 @@
+%% as-built approval sequence
+%% Citations: InvoiceEndpoints.ApproveAsync, InvoiceService.ApproveAsync / DecideAsync,
+%% IInvoiceStore.GetAsync, IInvoiceStore.TryUpdateAsync, InMemoryInvoiceStore.
+
+sequenceDiagram
+    actor Caller
+    participant EP as InvoiceEndpoints.ApproveAsync
+    participant SVC as InvoiceService.DecideAsync
+    participant STORE as InMemoryInvoiceStore
+
+    Caller->>EP: POST /api/invoices/{id}/approve { actor }
+    EP->>SVC: ApproveAsync(id, actor)
+    SVC->>STORE: GetAsync(id)
+    STORE-->>SVC: Invoice or null
+    alt not found
+        SVC-->>EP: ApprovalOutcome.NotFound
+        EP-->>Caller: 404
+    else status != Submitted
+        SVC-->>EP: ApprovalOutcome.Conflict
+        EP-->>Caller: 409
+    else compare-and-swap
+        SVC->>STORE: TryUpdateAsync(decided, expected=Submitted)
+        alt lost the race
+            STORE-->>SVC: false
+            SVC-->>EP: ApprovalOutcome.Conflict
+            EP-->>Caller: 409
+        else written
+            STORE-->>SVC: true
+            SVC-->>EP: ApprovalOutcome.Approved
+            EP-->>Caller: 200 InvoiceResponse
+        end
+    end
+    Note over Caller,STORE: No PayEx call. No SQL write. No message published.

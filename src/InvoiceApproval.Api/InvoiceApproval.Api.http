@@ -1,0 +1,23 @@
+@InvoiceApproval.Api_HostAddress = https://localhost:7184
+
+GET {{InvoiceApproval.Api_HostAddress}}/health
+Accept: application/json
+
+###
+
+POST {{InvoiceApproval.Api_HostAddress}}/api/invoices
+Content-Type: application/json
+
+{
+  "vendorId": "V-100",
+  "vendorName": "Northwind Paper",
+  "amount": 1250.50,
+  "currency": "USD",
+  "description": "Q4 paper stock",
+  "submittedBy": "casey"
+}
+
+###
+
+GET {{InvoiceApproval.Api_HostAddress}}/api/invoices
+Accept: application/json

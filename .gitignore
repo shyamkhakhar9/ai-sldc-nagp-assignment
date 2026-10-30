@@ -1,0 +1,14 @@
+bin/
+obj/
+.vs/
+.idea/
+*.user
+*.suo
+.DS_Store
+TestResults/
+artifacts/
+*.log
+.env
+secrets.json
+.venv/
+venv/
